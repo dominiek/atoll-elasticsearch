@@ -39,7 +39,7 @@ func TestElasticsearchClusterStats(t *testing.T) {
   defer ts.Close();
 
   elasticsearch := Elasticsearch{"localhost", 9200};
-  data, err := elasticsearch.ClusterStats();
+  data, err := elasticsearch.ClusterStats(ts.URL);
   assert.Equal(t, err, nil)
 
   jsonParsed, err := gabs.ParseJSON([]byte(data))

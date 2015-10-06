@@ -15,7 +15,7 @@ type Elasticsearch struct {
 };
 
 func (this Elasticsearch) Monitor() (string, error) {
-  data, err := this.ClusterStats();
+  data, err := this.ClusterStats("");
   if err != nil {
     return "", err
   }
@@ -60,8 +60,10 @@ func (this Elasticsearch) statsToAtollReport(data string) (string, error) {
   return atollReport.String(), nil;
 }
 
-func (this Elasticsearch) ClusterStats() (string, error) {
-  url := fmt.Sprintf("http://%s:%d/_cluster/stats", this.host, this.port);
+func (this Elasticsearch) ClusterStats(url string) (string, error) {
+  if len(url) == 0 {
+    url = fmt.Sprintf("http://%s:%d/_cluster/stats", this.host, this.port);
+  }
   req, err := http.NewRequest("GET", url, nil)
   req.Header.Set("Accept", "application/json")
   client := &http.Client{}
