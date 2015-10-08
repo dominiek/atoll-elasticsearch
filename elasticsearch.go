@@ -29,6 +29,8 @@ func (this Elasticsearch) statsToAtollReport(data string) (string, error) {
     return "", err
   }
   atollReport := gabs.New();
+  atollReport.SetP("elasticsearch", "id");
+  atollReport.SetP("Elasticsearch", "name");
 
   // Main state
   state := "error";
